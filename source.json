@@ -1,0 +1,18 @@
+{
+    "tsSubCmds": [
+        {
+            "entityType": "DEVICE",
+            "entityId": "6efe1900-45ef-11ed-a9e6-cfa5b5a37a8d",
+            "scope": "LATEST_TELEMETRY",
+            "cmdId": 1,
+            "keys": "voltage,current,freq,mode"
+        },
+        {
+            "entityType": "DEVICE",
+            "entityId": "6f344430-45ef-11ed-a8b3-e1710481c0da",
+            "scope": "LATEST_TELEMETRY",
+            "cmdId": 2,
+            "keys": "temperature,humid,latitude,longitude"
+        }
+    ]
+}

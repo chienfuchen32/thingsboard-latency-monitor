@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: latency-monitor
+  namespace: monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: latency-monitor
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 100%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: latency-monitor
+    spec:
+      containers:
+      - name: kafka-client
+        image: latency-monitor:v0.0.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/bash
+        - -c
+        - --
+        args:
+        - source .env; python3 kafka_ts_latency_monitor.py;
+      - name: websocket-client
+        image: latency-monitor:v0.0.1
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/bash
+        - -c
+        - --
+        args:
+        - source .env; python3 ws_ts_latency_monitor.py;
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        agentpool: monitor
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
